@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #2563eb;
+        }
+        .result {
+            background: #f8fafc;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 400px;
+            overflow: auto;
+        }
+        .success { border-left: 4px solid #10b981; }
+        .error { border-left: 4px solid #ef4444; }
+        h1 { color: #1e293b; }
+        h2 { color: #475569; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Air Quality API Test Page</h1>
+    <p>This page tests all API endpoints to help debug issues.</p>
+
+    <div class="test-section">
+        <h2>API Status</h2>
+        <button onclick="testStatus()">Test /api/status</button>
+        <div id="status-result" class="result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Overview Data</h2>
+        <button onclick="testOverview()">Test /api/overview</button>
+        <div id="overview-result" class="result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Sensors Data</h2>
+        <button onclick="testSensors()">Test /api/sensors</button>
+        <div id="sensors-result" class="result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Time Series Data</h2>
+        <button onclick="testTimeseries()">Test /api/timeseries/UCI_IT_001</button>
+        <div id="timeseries-result" class="result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Hourly Pattern</h2>
+        <button onclick="testHourly()">Test /api/hourly_pattern</button>
+        <div id="hourly-result" class="result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Model Info</h2>
+        <button onclick="testModel()">Test /api/model_info</button>
+        <div id="model-result" class="result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>All Tests</h2>
+        <button onclick="runAllTests()">Run All Tests</button>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:5001/api';
+
+        async function testEndpoint(endpoint, resultId) {
+            const resultDiv = document.getElementById(resultId);
+            resultDiv.textContent = 'Loading...';
+            resultDiv.className = 'result';
+            
+            try {
+                const response = await fetch(`${API_BASE}${endpoint}`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    resultDiv.className = 'result success';
+                    resultDiv.textContent = `✅ Success (${response.status})\n\n${JSON.stringify(data, null, 2)}`;
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.textContent = `❌ Error (${response.status})\n\n${JSON.stringify(data, null, 2)}`;
+                }
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = `❌ Network Error:\n\n${error.message}`;
+            }
+        }
+
+        function testStatus() {
+            testEndpoint('/status', 'status-result');
+        }
+
+        function testOverview() {
+            testEndpoint('/overview', 'overview-result');
+        }
+
+        function testSensors() {
+            testEndpoint('/sensors', 'sensors-result');
+        }
+
+        function testTimeseries() {
+            testEndpoint('/timeseries/UCI_IT_001', 'timeseries-result');
+        }
+
+        function testHourly() {
+            testEndpoint('/hourly_pattern', 'hourly-result');
+        }
+
+        function testModel() {
+            testEndpoint('/model_info', 'model-result');
+        }
+
+        async function runAllTests() {
+            testStatus();
+            await new Promise(r => setTimeout(r, 500));
+            testOverview();
+            await new Promise(r => setTimeout(r, 500));
+            testSensors();
+            await new Promise(r => setTimeout(r, 500));
+            testTimeseries();
+            await new Promise(r => setTimeout(r, 500));
+            testHourly();
+            await new Promise(r => setTimeout(r, 500));
+            testModel();
+        }
+    </script>
+</body>
+</html>
