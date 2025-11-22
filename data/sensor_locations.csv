@@ -1,0 +1,9 @@
+sensor_id,location_name,latitude,longitude,city,country
+DL_ITO,ITO,28.628,77.2497,Delhi,IN
+DL_RK_PURAM,RK Puram,28.5672,77.1822,Delhi,IN
+DL_ANAND_VIHAR,Anand Vihar,28.6469,77.3157,Delhi,IN
+DL_PUNJABI_BAGH,Punjabi Bagh,28.6692,77.1317,Delhi,IN
+DL_DWARKA,Dwarka Sector 8,28.5921,77.046,Delhi,IN
+DL_ROHINI,Rohini,28.7418,77.0688,Delhi,IN
+DL_MUNDKA,Mundka,28.6803,77.0344,Delhi,IN
+DL_NEHRU_NAGAR,Nehru Nagar,28.5672,77.2531,Delhi,IN

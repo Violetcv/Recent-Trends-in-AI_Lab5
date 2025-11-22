@@ -286,7 +286,14 @@ if __name__ == '__main__':
     print("=" * 60)
     print("🌍 Air Quality Monitoring System - Web Server")
     print("=" * 60)
-    print(f"Frontend: http://localhost:5001")
-    print(f"API: http://localhost:5001/api/")
+    
+    # Use PORT environment variable for deployment platforms
+    port = int(os.environ.get('PORT', 5001))
+    debug = os.environ.get('FLASK_ENV', 'development') == 'development'
+    
+    print(f"Frontend: http://localhost:{port}")
+    print(f"API: http://localhost:{port}/api/")
+    print(f"Environment: {'Development' if debug else 'Production'}")
     print("=" * 60)
-    app.run(debug=True, port=5001)
+    
+    app.run(host='0.0.0.0', port=port, debug=debug)

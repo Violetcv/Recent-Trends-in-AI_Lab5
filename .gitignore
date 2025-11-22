@@ -1,12 +1,15 @@
 *.pyc
 __pycache__/
-*.pkl
-*.h5
-*.model
 .DS_Store
 .ipynb_checkpoints/
 data/raw/
-*.csv
-*.json
 venv/
+env/
 .env
+*.log
+lstm_training.log
+
+# Keep models and data for deployment
+# *.pkl
+# *.h5
+# *.csv
